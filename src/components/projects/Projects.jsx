@@ -3,10 +3,7 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { FaGithub } from "react-icons/fa";
 import invent from "../../assets/inventory.png";
 
-/**
- * Placeholder cuando el proyecto no tiene imagen.
- * Muestra un gradiente y el stack tecnológico.
- */
+
 const ProjectPlaceholder = ({ tech, title }) => (
   <div
     className="h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-800/80 to-slate-800"
