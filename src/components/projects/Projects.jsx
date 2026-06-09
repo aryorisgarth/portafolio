@@ -3,69 +3,79 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { FaGithub } from "react-icons/fa";
 import invent from "../../assets/inventory.png";
 
-
-const ProjectPlaceholder = ({ tech, title }) => (
-  <div
-    className="h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-800/80 to-slate-800"
-    aria-hidden
-  >
-    <span className="text-white/90 text-sm font-medium text-center">
-      {tech || title}
-    </span>
-  </div>
-);
-
 const ProjectsCard = ({ image, title, description, demoUrl, repoUrl, tech }) => {
-  const hasLink = demoUrl || repoUrl;
-  const linkUrl = demoUrl || repoUrl;
   const hasImage = Boolean(image);
 
-  const cardContent = (
-    <div className="rounded-lg h-52 overflow-hidden bg-slate-800/50 border border-slate-700 flex items-stretch">
-      {hasImage ? (
-        <img
-          src={image}
-          alt={`Captura del proyecto ${title}`}
-          className="object-cover object-center h-full w-full hover:scale-105 transition-transform duration-300"
-        />
-      ) : (
-        <ProjectPlaceholder tech={tech} title={title} />
-      )}
-    </div>
-  );
-
   return (
-    <article className="p-4 md:w-1/2 lg:max-w-md mb-6 flex flex-col">
-      {hasLink ? (
-        <a
-          href={linkUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-blue-950 rounded-lg overflow-hidden"
-          aria-label={`Ver proyecto ${title}`}
-        >
-          {cardContent}
-        </a>
-      ) : (
-        cardContent
-      )}
-      <h2 className="text-xl font-medium text-white mt-4">{title}</h2>
-      {description && (
-        <p className="text-gray-400 text-sm mt-2 line-clamp-2 flex-1">
-          {description}
-        </p>
-      )}
-      {hasLink && (
-        <a
-          href={linkUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-300 hover:text-blue-100 inline-flex items-center mt-3 gap-1 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 rounded w-fit"
-        >
-          {demoUrl ? "Ver demo" : "Ver código"}
-          <HiOutlineExternalLink className="w-4 h-4" />
-        </a>
-      )}
+    <article className="p-4 md:w-1/2 w-full flex flex-col" data-aos="fade-up">
+      <div className="bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden flex flex-col h-full hover:border-blue-500/30 transition-all duration-300 shadow-xl group">
+        {/* Imagen / Placeholder */}
+        <div className="h-52 w-full overflow-hidden bg-slate-950 flex items-stretch border-b border-slate-800 relative">
+          {hasImage ? (
+            <img
+              src={image}
+              alt={`Captura del proyecto ${title}`}
+              className="object-cover object-top h-full w-full group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div className="h-full w-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-950 via-slate-950 to-indigo-950">
+              <span className="text-blue-400 text-lg font-bold tracking-wider">
+                {title}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Contenido */}
+        <div className="p-6 flex flex-col flex-1">
+          <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+            {title}
+          </h3>
+          <p className="text-gray-400 text-sm mt-3 leading-relaxed flex-1">
+            {description}
+          </p>
+
+          {/* Tags */}
+          {tech && tech.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4 mb-6">
+              {tech.map((t, index) => (
+                <span
+                  key={index}
+                  className="px-2.5 py-0.5 text-xs font-semibold text-blue-300 bg-blue-900/30 border border-blue-800/30 rounded-md"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Enlaces de Acción */}
+          <div className="flex items-center gap-4 border-t border-slate-800/60 pt-4 mt-auto">
+            {demoUrl && (
+              <a
+                href={demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                Ver Demo
+                <HiOutlineExternalLink className="w-4 h-4" />
+              </a>
+            )}
+            {repoUrl && (
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-sm font-semibold text-gray-300 hover:text-white transition-colors"
+              >
+                <FaGithub className="w-4 h-4" />
+                Ver Código
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
     </article>
   );
 };
@@ -74,21 +84,21 @@ export default function Projects() {
   const projects = [
     {
       id: 1,
-      title: "Portafolio",
+      title: "Portafolio Personal",
       description:
-        "Este sitio web: React, Vite y Tailwind CSS. Diseño responsive y en español.",
+        "Mi sitio web profesional e interactivo, desarrollado con React, Vite y Tailwind CSS, implementando animaciones modernas, modo oscuro y optimización SEO.",
       image: null,
-      tech: "React · Vite · Tailwind",
+      tech: ["React", "Vite", "Tailwind CSS", "AOS"],
       demoUrl: "",
-      repoUrl: "https://github.com/aryorisgarth",
+      repoUrl: "https://github.com/aryorisgarth/portafolio-website",
     },
     {
       id: 2,
       title: "CRUD React JavaScript",
       description:
-        "Aplicación CRUD con React y JavaScript. Código disponible en GitHub.",
+        "Aplicación interactiva de gestión (CRUD) con React, JavaScript y estilos personalizados, ideal para administración y control de inventarios.",
       image: invent,
-      tech: "",
+      tech: ["React", "JavaScript", "Tailwind CSS", "Local Storage"],
       demoUrl: "",
       repoUrl: "https://github.com/aryorisgarth/crud-react-javascript",
     },
@@ -97,20 +107,19 @@ export default function Projects() {
   const githubProfileUrl = "https://github.com/aryorisgarth";
 
   return (
-    <section id="projects" className="text-gray-400 bg-blue-950 body-font">
-      <div className="container px-4 sm:px-6 py-16 mx-auto max-w-5xl">
+    <section id="projects" className="text-gray-400 bg-slate-950 body-font py-20">
+      <div className="container px-4 sm:px-6 mx-auto max-w-5xl">
         <div
           data-aos="fade-up"
           data-aos-delay="200"
-          className="flex flex-wrap sm:flex-row flex-col gap-4 py-6 mb-12 items-start justify-between"
+          className="flex flex-wrap sm:flex-row flex-col gap-4 py-6 mb-12 items-start justify-between border-b border-slate-900 pb-8"
         >
           <div className="sm:w-2/5">
-            <h2 className="text-white font-semibold title-font text-3xl mb-2">
-              Proyectos
+            <h2 className="text-white font-bold title-font text-3xl sm:text-4xl mb-3">
+              Proyectos Destacados
             </h2>
-            <p className="leading-relaxed text-base text-gray-400">
-              Algunos de los proyectos en los que he trabajado. Puedes ver el
-              código o la demo en cada tarjeta.
+            <p className="leading-relaxed text-sm text-gray-400">
+              Algunos de los proyectos en los que he trabajado. Puedes ver el código o la demo en producción de cada uno.
             </p>
           </div>
           <a
@@ -119,7 +128,7 @@ export default function Projects() {
             rel="noopener noreferrer"
             data-aos="fade-up"
             data-aos-delay="300"
-            className="text-gray-900 bg-white hover:bg-blue-300 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-full text-sm px-5 py-2.5 text-center transition-colors inline-flex items-center gap-2"
+            className="text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-full text-sm px-5 py-2.5 text-center transition-all inline-flex items-center gap-2"
           >
             <FaGithub className="w-4 h-4" />
             Ver todo en GitHub
@@ -128,7 +137,7 @@ export default function Projects() {
         <div
           data-aos="fade-up"
           data-aos-delay="400"
-          className="flex flex-wrap -m-4 justify-center md:justify-start"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           {projects.map((project) => (
             <ProjectsCard

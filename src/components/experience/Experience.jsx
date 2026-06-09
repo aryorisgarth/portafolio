@@ -11,7 +11,7 @@ const experiences = [
     id: 2,
     title: "Desarrollo web con React",
     subtitle: "Front-end",
-    description: "Proyectos con React, JavaScript y Tailwind CSS.",
+    description: "Proyectos modernos con React, JavaScript y Tailwind CSS.",
   },
   {
     id: 3,
@@ -23,51 +23,52 @@ const experiences = [
     id: 4,
     title: "Formación continua",
     subtitle: "Actualización",
-    description: "Cursos y práctica constante en nuevas tecnologías.",
+    description: "Cursos y práctica constante en nuevas tecnologías front-end y back-end.",
   },
 ];
 
 export default function Experience() {
   return (
-    <section id="experience" className="text-gray-600 body-font bg-slate-50">
-      <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-20">
+    <section id="experience" className="text-gray-300 body-font bg-slate-900 py-24">
+      <div className="container px-5 mx-auto max-w-5xl">
+        <div className="flex flex-col text-center w-full mb-16">
           <h2
             data-aos="fade-up"
             data-aos-delay="200"
-            className="sm:text-3xl text-3xl font-bold title-font mb-4 text-gray-900"
+            className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent mb-4"
           >
-            Experiencia
+            Experiencia & Formación
           </h2>
           <p
             data-aos="fade-up"
             data-aos-delay="300"
-            className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-600"
+            className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-400"
           >
-            Formación en Ingeniería en Sistemas y desarrollo de proyectos
-            front-end con React. En constante aprendizaje.
+            Formación en Ingeniería en Sistemas y desarrollo de proyectos front-end con React. En constante actualización profesional.
           </p>
         </div>
         <div
           data-aos="fade-up"
           data-aos-delay="400"
-          className="flex flex-wrap -m-4 text-center"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {experiences.map((exp) => (
             <div
               key={exp.id}
-              className="p-4 md:w-1/4 sm:w-1/2 w-full"
+              className="p-1 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900 border border-slate-800 hover:border-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1 group"
             >
-              <div className="border-2 border-blue-200 bg-white px-4 py-6 rounded-lg h-full hover:shadow-md transition-shadow">
-                <h3 className="title-font font-medium text-gray-900 mb-1">
-                  {exp.title}
-                </h3>
-                <p className="text-blue-700 text-sm font-medium mb-2">
-                  {exp.subtitle}
-                </p>
-                <p className="leading-relaxed text-sm text-gray-600">
-                  {exp.description}
-                </p>
+              <div className="bg-slate-950/60 p-6 rounded-[14px] h-full flex flex-col justify-between">
+                <div>
+                  <span className="inline-block px-3 py-1 text-xs font-semibold text-blue-300 bg-blue-900/35 rounded-full mb-4">
+                    {exp.subtitle}
+                  </span>
+                  <h3 className="title-font font-bold text-white text-lg mb-2 group-hover:text-blue-300 transition-colors">
+                    {exp.title}
+                  </h3>
+                  <p className="leading-relaxed text-sm text-gray-400 mt-2">
+                    {exp.description}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
