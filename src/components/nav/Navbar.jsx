@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const navLinks = [
@@ -11,36 +11,57 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 body-font bg-blue-950/95 backdrop-blur-sm border-b border-white/5"
+      className={`fixed left-0 right-0 z-50 transition-all duration-500 px-4 md:px-8 ${
+        isScrolled ? "top-3 md:top-4" : "top-0 md:top-2"
+      }`}
       role="banner"
     >
-      <div className="container mx-auto flex flex-wrap p-4 items-center justify-between">
+      <div
+        className={`container mx-auto max-w-5xl flex flex-wrap items-center justify-between transition-all duration-500 rounded-3xl md:rounded-full ${
+          isScrolled
+            ? "backdrop-blur-xl bg-slate-950/70 border border-slate-800/85 py-3 px-6 shadow-2xl shadow-slate-950/40"
+            : "backdrop-blur-md bg-slate-900/30 border border-slate-900/10 py-4 px-6 md:px-8"
+        }`}
+      >
         <a
           href="#home"
-          className="flex title-font font-medium mb-0"
+          className="flex title-font font-medium items-center"
           aria-label="Volver al inicio"
         >
-          <span className="font-bold text-white text-xl sm:text-2xl tracking-wider bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">
-            PORTAFOLIO
+          <span className="font-extrabold text-white text-xl sm:text-2xl tracking-widest bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">
+            ADOLFO.dev
           </span>
         </a>
 
         {/* Botón de Menú Móvil */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 rounded p-1 transition-colors"
+          className="md:hidden text-gray-300 hover:text-white focus:outline-none p-1 transition-colors"
           aria-expanded={isOpen}
-          aria-label={isOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
+          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
         >
-          {isOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+          {isOpen ? <FaTimes className="w-5 h-5" /> : <FaBars className="w-5 h-5" />}
         </button>
 
         {/* Navegación para pantallas grandes */}
         <nav
-          className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300"
+          className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-300"
           aria-label="Navegación principal desktop"
         >
           {navLinks.map((link) => (
@@ -48,18 +69,19 @@ export default function Navbar() {
               key={link.id}
               href={link.link}
               aria-label={link.aria}
-              className="hover:text-white hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-blue-950 rounded px-2 py-1"
+              className="hover:text-blue-400 transition-colors focus:outline-none rounded-lg px-3 py-1.5 relative group"
             >
               {link.name}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 group-hover:w-full transition-all duration-300"></span>
             </a>
           ))}
         </nav>
 
-        {/* Navegación desplegable móvil */}
+        {/* Navegación móvil */}
         <nav
           className={`${
-            isOpen ? "flex animate-fade-in-down" : "hidden"
-          } md:hidden flex-col w-full mt-4 gap-3 text-sm font-medium text-gray-300 border-t border-white/5 pt-4`}
+            isOpen ? "flex opacity-100 translate-y-0" : "hidden opacity-0 -translate-y-4"
+          } md:hidden flex-col w-full mt-4 gap-3 text-sm font-semibold text-gray-300 border-t border-slate-800/80 pt-4 transition-all duration-300`}
           aria-label="Navegación principal móvil"
         >
           {navLinks.map((link) => (
@@ -68,7 +90,7 @@ export default function Navbar() {
               href={link.link}
               aria-label={link.aria}
               onClick={() => setIsOpen(false)}
-              className="hover:text-white hover:bg-white/5 transition-all focus:outline-none focus:ring-2 focus:ring-blue-400 rounded px-3 py-2"
+              className="hover:text-blue-400 hover:bg-slate-900/50 transition-all rounded-xl px-4 py-2.5 border border-transparent hover:border-slate-800"
             >
               {link.name}
             </a>

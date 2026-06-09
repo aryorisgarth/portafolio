@@ -59,6 +59,7 @@ const Contact = () => {
       href: `mailto:${email}`,
       icon: HiMail,
       aria: "Enviar email directo",
+      glow: "group-hover:border-blue-500/30 group-hover:shadow-blue-500/5 group-hover:text-blue-400"
     },
     {
       id: "github",
@@ -66,6 +67,7 @@ const Contact = () => {
       href: githubUrl,
       icon: FaGithub,
       aria: "Ver perfil en GitHub",
+      glow: "group-hover:border-white/20 group-hover:shadow-white/5 group-hover:text-white"
     },
     {
       id: "linkedin",
@@ -73,21 +75,28 @@ const Contact = () => {
       href: linkedinUrl,
       icon: FaLinkedin,
       aria: "Ver perfil en LinkedIn",
+      glow: "group-hover:border-blue-600/30 group-hover:shadow-blue-600/5 group-hover:text-blue-500"
     },
   ];
 
   return (
     <section
       id="contact"
-      className="bg-slate-900 text-gray-300 body-font py-24 px-4 border-t border-slate-800"
+      className="bg-slate-900 text-gray-300 body-font py-24 px-4 border-t border-slate-800 relative overflow-hidden"
     >
-      <div className="container mx-auto max-w-5xl">
+      {/* Luz decorativa ambiental */}
+      <div className="absolute top-[10%] left-[-10%] w-[350px] h-[350px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="container mx-auto max-w-5xl relative z-10">
         <div className="text-center mb-16" data-aos="fade-up">
-          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent mb-4">
+          <span className="text-xs font-bold tracking-widest text-blue-400 bg-blue-900/20 border border-blue-900/35 rounded-full px-3.5 py-1.5 uppercase">
             Contacto
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent mt-4 mb-4">
+            Hablemos de tu Idea
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto text-sm">
-            ¿Tienes un proyecto en mente o buscas incorporar talento a tu equipo? ¡Hablemos!
+          <p className="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">
+            ¿Buscas incorporar talento técnico, desarrollar una aplicación web personalizada o simplemente conectar? Escríbeme.
           </p>
         </div>
 
@@ -99,25 +108,25 @@ const Contact = () => {
               Puedes enviarme un mensaje usando el formulario, escribirme directamente por correo electrónico, o revisar mi actividad y proyectos en LinkedIn y GitHub.
             </p>
             <div className="flex flex-col gap-4">
-              {links.map(({ id, label, href, icon: Icon, aria }) => (
+              {links.map(({ id, label, href, icon: Icon, aria, glow }) => (
                 <a
                   key={id}
                   href={href}
                   target={id === "email" ? undefined : "_blank"}
                   rel={id === "email" ? undefined : "noopener noreferrer"}
                   aria-label={aria}
-                  className="flex items-center justify-between px-5 py-4 rounded-2xl bg-slate-950/40 hover:bg-blue-900/10 border border-slate-800 hover:border-blue-500/20 transition-all duration-300 text-gray-300 hover:text-white group"
+                  className={`flex items-center justify-between px-5 py-4 rounded-2xl bg-slate-950/40 border border-slate-900 transition-all duration-300 text-gray-300 hover:bg-slate-900/10 hover:translate-x-1 group ${glow}`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-blue-400 group-hover:text-blue-300">
+                    <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-blue-400 group-hover:text-inherit transition-colors duration-300">
                       <Icon className="w-5 h-5" />
                     </div>
                     <span className="font-semibold text-sm">{label}</span>
                   </div>
                   {id !== "email" ? (
-                    <HiOutlineExternalLink className="w-4 h-4 text-gray-500 group-hover:text-white transition-colors" />
+                    <HiOutlineExternalLink className="w-4 h-4 text-gray-500 group-hover:text-inherit transition-colors duration-300" />
                   ) : (
-                    <span className="text-xs text-blue-400 font-semibold group-hover:underline">agarth867@gmail.com</span>
+                    <span className="text-xs text-blue-400 font-semibold group-hover:text-blue-300 group-hover:underline transition-colors duration-300">{email}</span>
                   )}
                 </a>
               ))}
@@ -128,7 +137,7 @@ const Contact = () => {
           <div className="lg:col-span-7" data-aos="fade-up" data-aos-delay="300">
             <form
               onSubmit={handleSubmit}
-              className="bg-slate-950/40 border border-slate-800/80 p-6 sm:p-8 rounded-2xl flex flex-col gap-5 shadow-2xl backdrop-blur-sm"
+              className="bg-slate-950/40 border border-slate-900 p-6 sm:p-8 rounded-3xl flex flex-col gap-5 shadow-2xl backdrop-blur-sm"
             >
               <h3 className="text-lg font-bold text-white border-b border-slate-900 pb-3">Enviar un Mensaje</h3>
               <div>
@@ -142,7 +151,7 @@ const Contact = () => {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all"
+                  className="w-full bg-slate-900/50 border border-slate-900 rounded-2xl px-4 py-3.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
                   placeholder="Tu nombre"
                 />
               </div>
@@ -158,7 +167,7 @@ const Contact = () => {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all"
+                  className="w-full bg-slate-900/50 border border-slate-900 rounded-2xl px-4 py-3.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
                   placeholder="tu@correo.com"
                 />
               </div>
@@ -174,19 +183,19 @@ const Contact = () => {
                   rows="4"
                   value={formData.message}
                   onChange={handleInputChange}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all resize-none"
+                  className="w-full bg-slate-900/50 border border-slate-900 rounded-2xl px-4 py-3.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all resize-none"
                   placeholder="¿En qué puedo ayudarte?"
                 ></textarea>
               </div>
 
               {status === "success" && (
-                <div className="p-4 bg-green-900/30 border border-green-800 text-green-300 rounded-xl text-sm text-center">
+                <div className="p-4 bg-green-950/40 border border-green-800 text-green-300 rounded-2xl text-sm text-center">
                   ¡Mensaje enviado con éxito! Me pondré en contacto contigo pronto.
                 </div>
               )}
 
               {status === "error" && (
-                <div className="p-4 bg-red-900/30 border border-red-800 text-red-300 rounded-xl text-sm text-center">
+                <div className="p-4 bg-red-950/40 border border-red-800 text-red-300 rounded-2xl text-sm text-center">
                   Ocurrió un error al enviar el mensaje. Por favor, escríbeme directamente a {email}.
                 </div>
               )}
@@ -196,14 +205,14 @@ const Contact = () => {
                 disabled={status === "loading"}
                 className="w-full mt-2 relative group flex items-center justify-center gap-2"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl blur opacity-65 group-hover:opacity-100 transition duration-300"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl blur opacity-65 group-hover:opacity-100 transition duration-300"></div>
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="relative w-full bg-slate-900 hover:bg-slate-950 text-white font-semibold py-3.5 px-6 rounded-xl text-sm transition-all border border-slate-800 flex items-center justify-center gap-2"
+                  className="relative w-full bg-slate-900 hover:bg-slate-950 text-white font-bold py-4 px-6 rounded-2xl text-sm transition-all border border-slate-800 flex items-center justify-center gap-2"
                 >
                   {status === "loading" ? "Enviando..." : "Enviar Mensaje"}
-                  <FaPaperPlane className="w-3.5 h-3.5" />
+                  <FaPaperPlane className="w-3.5 h-3.5 text-blue-400" />
                 </button>
               </button>
             </form>
